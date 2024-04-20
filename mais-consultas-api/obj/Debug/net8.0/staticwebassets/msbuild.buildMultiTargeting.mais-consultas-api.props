@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/mais-consultas-api.props" />
+</Project>
