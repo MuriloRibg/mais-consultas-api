@@ -22,12 +22,12 @@ public class Professional
 		Name = name;
 	}
 
-	public void SetService(string service)
+	public void SetService(Service service)
 	{
 		Service = service;
 	}
 
-	public void SetProvider(string provider)
+	public void SetProvider(Provider provider)
 	{
 		Provider = provider;
 	}
