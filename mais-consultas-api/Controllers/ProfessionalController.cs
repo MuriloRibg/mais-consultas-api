@@ -32,14 +32,14 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Professional> Post([FromBody] string name, string service, string provider)
+        public ActionResult<Professional> Post(string name, string service, string provider)
         {
             var response = _professionalService.Add(name, service, provider);
             return Ok(response);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Professional> Put(int id, [FromBody] string name, string service, string provider)
+        public ActionResult<Professional> Put(int id, string name, string service, string provider)
         {
             var response = _professionalService.Update(id, name, service, provider);
             return Ok(response);

@@ -13,6 +13,8 @@ namespace mais_consultas_api.Services
 
             _context.Professionals.Add(professional);
 
+            _context.SaveChanges();
+
             return professional;
         }
 
@@ -30,6 +32,7 @@ namespace mais_consultas_api.Services
         {
             Professional professional = _context.Professionals.Where(y => y.Id == id).First();
             _context.Professionals.Remove(professional);
+            _context.SaveChanges();
         }
 
         public Professional Update(int id, string name, string service, string provider)
@@ -40,6 +43,8 @@ namespace mais_consultas_api.Services
             professional.SetProvider(provider);
             
             _context.Professionals.Update(professional);
+
+            _context.SaveChanges();
             return professional;
         }
     }
