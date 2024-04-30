@@ -4,10 +4,10 @@ public class Professional
 {
 	public int Id { get; protected set; }
 	public string Name { get; protected set; }
-	public Service Service { get; protected set; }
-	public Provider Provider { get; protected set; }
+	public string Service { get; protected set; }
+	public string Provider { get; protected set; }
 
-	public Professional(string name, Service service, Provider provider)
+	public Professional(string name, string service, string provider)
 	{
 		SetName(name);
 		SetService(service);
@@ -22,12 +22,12 @@ public class Professional
 		Name = name;
 	}
 
-	public void SetService(Service service)
+	public void SetService(string service)
 	{
 		Service = service;
 	}
 
-	public void SetProvider(Provider provider)
+	public void SetProvider(string provider)
 	{
 		Provider = provider;
 	}
