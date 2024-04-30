@@ -7,7 +7,7 @@ public class Professional
 	public string Service { get; protected set; }
 	public string Provider { get; protected set; }
 
-	public Professional(string name, string service, string provider)
+	public Professional(string name, Service service, Provider provider)
 	{
 		SetName(name);
 		SetService(service);
