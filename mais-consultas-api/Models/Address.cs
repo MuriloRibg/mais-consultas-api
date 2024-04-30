@@ -1,15 +1,27 @@
-using System;
+using System.ComponentModel.DataAnnotations;
 
-public class Address{
-    public int Id {get; protected set;}
-    public string LineOne {get; protected set;}
-    public string LineTwo {get; protected set;}
-    public int ZipCode {get; protected set;}
-    public string City {get; protected set;}
-    public string State {get; protected set;}
+public class Address
+{
+    [Key]
+    [Required]
+    public int Id {get; set;}
+    [Required]
+    [StringLength(100)]
+    public string LineOne {get; set;}
+    [StringLength(100)]
+    public string LineTwo {get; set;}
+    [Required]
+    [StringLength(8)]
+    public string ZipCode {get; set;}
+    [Required]
+    [StringLength(50)]
+    public string City {get; set;}
+    [Required]
+    [StringLength(50)]
+    public string State {get; set;}
 
-    public Address(int id, string lineOne, string lineTwo, int zipCode, string city, string state){
-        Id = id;
+    public Address(string lineOne, string lineTwo, string zipCode, string city, string state)
+    {
         SetLineOne(lineOne);
         SetLineTwo(lineTwo);
         SetZipCode(zipCode);
@@ -25,7 +37,7 @@ public class Address{
         LineTwo = lineTwo;
     }
 
-    public void SetZipCode(int zipCode){
+    public void SetZipCode(string zipCode){
         ZipCode = zipCode;
     }
 
