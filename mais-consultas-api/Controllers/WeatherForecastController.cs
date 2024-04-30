@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/using Microsoft.AspNetCore.Mvc;
 
 namespace mais_consultas_api.Controllers;
 
