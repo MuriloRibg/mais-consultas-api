@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 
-string? connectionString = "Server=localhost;Port=3306;Database=trabalho;Uid=root;Pwd=Autoglass@2020";
+string? connectionString = "MySQL";
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseMySql(connectionString,
