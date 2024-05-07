@@ -1,5 +1,4 @@
-﻿using System;
-using mais_consultas_api.Models;
+﻿using mais_consultas_api.Models;
 
 public class Professional
 {
@@ -8,7 +7,7 @@ public class Professional
 	public string Service { get; protected set; }
 	public Provider Provider { get; protected set; }
 
-	public Professional(string name, Service service, Provider provider)
+	public Professional(string name, string service, Provider provider)
 	{
 		SetName(name);
 		SetService(service);
@@ -28,7 +27,7 @@ public class Professional
 		Service = service;
 	}
 
-	public void SetProvider(string provider)
+	public void SetProvider(Provider provider)
 	{
 		Provider = provider;
 	}
