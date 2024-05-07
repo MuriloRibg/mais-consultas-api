@@ -22,3 +22,12 @@ API .Net 8 usando ORM Entity Framework e com arquitetura MVC.
     "MySql": "server=localhost;port=3306;database={SeuDB};uid={SeuUsuario};pwd={SuaSenha}"
   }
 ```
+
+Comando para criar e executar as migrations.
+
+```bash
+  dotnet tool install --global dotnet-ef
+  dotnet add package Microsoft.EntityFrameworkCore.Design
+  dotnet ef migrations add InitialCreate
+  dotnet ef database update
+```
