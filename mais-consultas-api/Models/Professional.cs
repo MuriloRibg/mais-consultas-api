@@ -28,7 +28,7 @@ public class Professional
 		Service = service;
 	}
 
-	public void SetProvider(Provider provider)
+	public void SetProvider(string provider)
 	{
 		Provider = provider;
 	}
