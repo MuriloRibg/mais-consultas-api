@@ -11,4 +11,6 @@ namespace mais_consultas_api.Data
 
         public DbSet<Models.Provider> Provider { get; set; }
     }
+
+    public DbSet<Professional> Professionals { get; set; }
 }

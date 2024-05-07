@@ -1,18 +1,27 @@
-﻿namespace mais_consultas_api.Models
-{
-    public class Professional
-    {
-        public int Id { get; protected set; }
-        public string Name { get; protected set; }
-        public string Service { get; protected set; }
-        public Provider Provider { get; protected set; }
+using System.ComponentModel.DataAnnotations;
 
-        public Professional(string name, string service, Provider provider)
-        {
-            SetName(name);
-            SetService(service);
-            SetProvider(provider);
-        }
+public class Professional
+{
+	[Key]
+	[Required]
+	public int Id { get; set; }
+
+	[Required]
+	[StringLength(100)]
+	public string Name { get; set; }
+
+	[Required]
+	public string Service { get; set; }
+
+	[Required]
+	public string Provider { get; set; }
+
+	public Professional(string name, string service, string provider)
+	{
+		SetName(name);
+		SetService(service);
+		SetProvider(provider);
+	}
 
         public void SetName(string name) 
         {

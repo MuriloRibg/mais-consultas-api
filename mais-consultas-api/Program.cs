@@ -1,5 +1,8 @@
 using mais_consultas_api.Data;
+using mais_consultas_api.Services;
+using mais_consultas_api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +14,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 
-string? connectionString = builder.Configuration.GetConnectionString("MySql");
+string? connectionString = "MySQL";
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseMySql(connectionString,
     ServerVersion.Parse("8.0.28-mysql")
 ));
+
+builder.Services.AddScoped<IProfessionalService, ProfessionalService>();
 
 WebApplication app = builder.Build();
 
