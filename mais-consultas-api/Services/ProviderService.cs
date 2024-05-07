@@ -1,12 +1,14 @@
 using AutoMapper;
 using FluentResults;
 using mais_consultas_api.Data;
+using mais_consultas_api.Data.Provider.Requests;
 using mais_consultas_api.Data.Responses;
 using mais_consultas_api.Models;
+using mais_consultas_api.Services.Interfaces;
 
 namespace mais_consultas_api.Services
 {
-    public class ProviderService
+    public class ProviderService : IProviderService
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
@@ -33,10 +35,9 @@ namespace mais_consultas_api.Services
 
         public Result Update(ProviderUpdateRequest providerUpdateRequest, int id)
         {
-            Provider aula = _context.Provider.FirstOrDefault(aula => aula.Id == id);
+            Provider aula = _context.Provider.FirstOrDefault(p => p.Id == id);
 
-            if (aula is null)
-                return Result.Fail("Provider não encontrado!");
+            if (aula is null) return Result.Fail("Provider não encontrado!");
 
             _mapper.Map(providerUpdateRequest, aula);
             _context.SaveChanges();

@@ -10,5 +10,5 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Provider> Provider { get; set; }
+    public DbSet<Models.Provider> Provider { get; set; }
 }
