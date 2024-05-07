@@ -2,7 +2,7 @@ using AutoMapper;
 using FluentResults;
 using mais_consultas_api.Data;
 using mais_consultas_api.Data.Provider.Requests;
-using mais_consultas_api.Data.Responses;
+using mais_consultas_api.Data.Provider.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 
