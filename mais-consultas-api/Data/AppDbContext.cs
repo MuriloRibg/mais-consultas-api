@@ -7,4 +7,6 @@ public class AppDbContext : DbContext
         :base(options)
     {
     }
+
+    public DbSet<Professional> Professionals { get; set; }
 }

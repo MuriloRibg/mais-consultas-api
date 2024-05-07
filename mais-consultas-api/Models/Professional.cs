@@ -1,13 +1,22 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 public class Professional
 {
-	public int Id { get; protected set; }
-	public string Name { get; protected set; }
-	public string Service { get; protected set; }
-	public string Provider { get; protected set; }
+	[Key]
+	[Required]
+	public int Id { get; set; }
 
-	public Professional(string name, Service service, Provider provider)
+	[Required]
+	[StringLength(100)]
+	public string Name { get; set; }
+
+	[Required]
+	public string Service { get; set; }
+
+	[Required]
+	public string Provider { get; set; }
+
+	public Professional(string name, string service, string provider)
 	{
 		SetName(name);
 		SetService(service);
