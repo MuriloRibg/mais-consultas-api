@@ -1,4 +1,4 @@
-﻿using mais_consultas_api.Models;
+using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

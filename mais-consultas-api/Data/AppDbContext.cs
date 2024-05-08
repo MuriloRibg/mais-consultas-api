@@ -22,4 +22,6 @@ namespace mais_consultas_api.Data
                 .HasForeignKey<Professional>(professional => professional.Id_Provider);
         }
     }
+
+    public DbSet<Professional> Professionals { get; set; }
 }
