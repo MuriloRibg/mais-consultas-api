@@ -1,27 +1,38 @@
 using mais_consultas_api.Data;
+using mais_consultas_api.Data.Provider.Profiles;
 using mais_consultas_api.Services;
-using mais_consultas_api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-;
+using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+//Injetando o AutoMapper
+builder.Services.AddAutoMapper(typeof(ProviderProfile));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mais.Consultas.API", Version = "v1" });
+});
 builder.Services.AddCors();
 
-string? connectionString = "MySQL";
+string? connectionString = builder.Configuration.GetConnectionString("MySql");
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseMySql(connectionString,
-    ServerVersion.Parse("8.0.28-mysql")
-));
+        ServerVersion.Parse("8.0.28-mysql")
+    ));
 
-builder.Services.AddScoped<IProfessionalService, ProfessionalService>();
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<ProviderService>()
+    .AddClasses()
+    .AsImplementedInterfaces()
+    .WithScopedLifetime()
+);
 
 WebApplication app = builder.Build();
 
