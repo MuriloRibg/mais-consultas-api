@@ -1,14 +1,17 @@
-﻿using mais_consultas_api.Data;
+using mais_consultas_api.Data;
+using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 
 namespace mais_consultas_api.Services
 {
-    public class ProfessionalService (AppDbContext context) : IProfessionalService
+    public class ProfessionalService(AppDbContext context) : IProfessionalService
     {
         private readonly AppDbContext _context = context;
 
-        public Professional Add(string name, string service, string provider)
+        public Professional Add(string name, string service, int idProvider)
         {
+            Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
+            if (provider is null) throw new Exception("Provider não encontrado");
             Professional professional = new(name, service, provider);
 
             _context.Professionals.Add(professional);
@@ -35,13 +38,16 @@ namespace mais_consultas_api.Services
             _context.SaveChanges();
         }
 
-        public Professional Update(int id, string name, string service, string provider)
+        public Professional Update(int id, string name, string service, int idProvider)
         {
+            Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
+            if (provider is null) throw new Exception("Provider não encontrado");
+            
             Professional professional = _context.Professionals.Where(y => y.Id == id).First();
             professional.SetName(name);
             professional.SetService(service);
             professional.SetProvider(provider);
-            
+
             _context.Professionals.Update(professional);
 
             _context.SaveChanges();
