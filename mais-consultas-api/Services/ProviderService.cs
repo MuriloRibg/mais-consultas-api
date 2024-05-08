@@ -21,7 +21,7 @@ namespace mais_consultas_api.Services
 
         public List<ProviderReadResponse> List()
         {
-            List<Provider> providers = _context.Provider.ToList();
+            List<Provider> providers = _context.Providers.ToList();
             return _mapper.Map<List<ProviderReadResponse>>(providers);
         }
 
@@ -35,7 +35,7 @@ namespace mais_consultas_api.Services
 
         public Result Update(ProviderUpdateRequest providerUpdateRequest, int id)
         {
-            Provider aula = _context.Provider.FirstOrDefault(p => p.Id == id);
+            Provider aula = _context.Providers.FirstOrDefault(p => p.Id == id);
 
             if (aula is null) return Result.Fail("Provider não encontrado!");
 
@@ -47,7 +47,7 @@ namespace mais_consultas_api.Services
 
         public Result Delete(int idProvider)
         {
-            Provider provider = _context.Provider.FirstOrDefault(p => p.Id == idProvider);
+            Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
 
             if (provider is null) return Result.Fail("Provider não encontrado!");
 

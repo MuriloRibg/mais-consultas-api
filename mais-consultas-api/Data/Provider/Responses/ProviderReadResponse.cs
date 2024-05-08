@@ -1,6 +1,6 @@
 namespace mais_consultas_api.Data.Provider.Responses
 {
-    public class ProviderReadResponse
+    public record ProviderReadResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

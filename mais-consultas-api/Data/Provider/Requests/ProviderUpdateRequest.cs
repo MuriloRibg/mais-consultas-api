@@ -1,6 +1,6 @@
 namespace mais_consultas_api.Data.Provider.Requests
 {
-    public class ProviderUpdateRequest
+    public record ProviderUpdateRequest
     {
         public string Name { get; set; }
         public string Cnpj { get; set; }

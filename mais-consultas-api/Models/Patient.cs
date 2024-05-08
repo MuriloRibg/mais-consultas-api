@@ -38,7 +38,5 @@ namespace mais_consultas_api.Models
         public Patient()
         {
         }
-
-
     }
 }

@@ -1,29 +1,33 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace mais_consultas_api.Models
 {
     public class Provider
     {
-        [Key]
+        [Key] 
         public int Id { get; protected set; }
-        
-        [Required]
-        [MaxLength(45)]
+
+        [Required] 
+        [MaxLength(45)] 
         public string Name { get; protected set; }
-        
+
         [Required]
-        [MaxLength(45)]
+        [MaxLength(45)] 
         public string Cnpj { get; protected set; }
-        
+
         [Required]
-        [MaxLength(15)]
+        [MaxLength(15)] 
         public string PhoneNumber { get; protected set; }
-        
+
         [Required]
-        [MaxLength(45)]
+        [MaxLength(45)] 
         public string Email { get; protected set; }
 
         public DateTime? DeleteAt { get; set; }
+        
+        [JsonIgnore]
+        public virtual Professional Professional { get; set; }
 
         protected Provider() { }
 
@@ -65,8 +69,8 @@ namespace mais_consultas_api.Models
                 _ => phoneNumber
             };
         }
-        
-        public void SetEmail(string email) => 
+
+        public void SetEmail(string email) =>
             Email = string.IsNullOrWhiteSpace(email)
                 ? throw new ArgumentException("Email não pode ser nulo")
                 : email;

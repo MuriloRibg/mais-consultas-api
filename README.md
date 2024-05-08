@@ -26,8 +26,6 @@ API .Net 8 usando ORM Entity Framework e com arquitetura MVC.
 Comando para criar e executar as migrations.
 
 ```bash
-  dotnet tool install --global dotnet-ef
-  dotnet add package Microsoft.EntityFrameworkCore.Design
   dotnet ef migrations add InitialCreate
   dotnet ef database update
 ```

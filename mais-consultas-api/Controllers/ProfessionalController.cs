@@ -1,4 +1,4 @@
-﻿using mais_consultas_api.Services;
+﻿using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,16 +32,16 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Professional> Post(string name, string service, string provider)
+        public ActionResult<Professional> Post(string name, string service, int idProvider)
         {
-            var response = _professionalService.Add(name, service, provider);
+            var response = _professionalService.Add(name, service, idProvider);
             return Ok(response);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Professional> Put(int id, string name, string service, string provider)
+        public ActionResult<Professional> Put(int id, string name, string service, int idProvider)
         {
-            var response = _professionalService.Update(id, name, service, provider);
+            var response = _professionalService.Update(id, name, service, idProvider);
             return Ok(response);
         }
 
