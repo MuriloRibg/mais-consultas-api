@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mais_consultas_api.Models
 {
@@ -22,7 +21,6 @@ namespace mais_consultas_api.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        [Column(TypeName = "date")]
         public DateTime BirthdayDate { get; set; }
 
         [Required]
