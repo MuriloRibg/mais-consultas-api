@@ -1,5 +1,3 @@
-
-
 using System.ComponentModel.DataAnnotations;
 
 namespace mais_consultas_api.Models

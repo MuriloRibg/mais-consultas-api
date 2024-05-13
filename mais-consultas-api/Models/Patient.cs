@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mais_consultas_api.Models
 {
@@ -22,7 +21,6 @@ namespace mais_consultas_api.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        [Column(TypeName = "date")]
         public DateTime BirthdayDate { get; set; }
 
         [Required]
@@ -48,30 +46,30 @@ namespace mais_consultas_api.Models
 
         public void SetId(int id) =>
             Id = id <= 0
-                ? throw new ArgumentException("Id não pode ser menor ou igual zero")
+                ? throw new ArgumentException("Id nï¿½o pode ser menor ou igual zero")
                 : id;
 
         public void SetCpf(string cpf) =>
            Cpf = string.IsNullOrWhiteSpace(cpf)
-               ? throw new ArgumentException("Cpf não pode ser nulo")
+               ? throw new ArgumentException("Cpf nï¿½o pode ser nulo")
                : cpf;
 
         public void SetName(string name) =>
             Name = string.IsNullOrWhiteSpace(name)
-                ? throw new ArgumentException("Nome não pode ser nulo")
+                ? throw new ArgumentException("Nome nï¿½o pode ser nulo")
                 : name;
 
         public void SetPhoneNumber(string phoneNumber)
         {
             if (string.IsNullOrWhiteSpace(phoneNumber))
-                throw new ArgumentException("Número de não pode ser nulo");
+                throw new ArgumentException("Nï¿½mero de nï¿½o pode ser nulo");
 
             PhoneNumber = phoneNumber.Length switch
             {
                 > 15 =>
-                    throw new ArgumentException("Número de telefone não ter mais de 15 digitos."),
+                    throw new ArgumentException("Nï¿½mero de telefone nï¿½o ter mais de 15 digitos."),
                 < 15 =>
-                    throw new ArgumentException("Número de telefone não ter menos de 15 digitos."),
+                    throw new ArgumentException("Nï¿½mero de telefone nï¿½o ter menos de 15 digitos."),
                 _ => phoneNumber
             };
         }
@@ -81,7 +79,7 @@ namespace mais_consultas_api.Models
         {
             if (birthdayDate == DateTime.MinValue)
             {
-                throw new ArgumentException("Data de nascimento não pode ser nula");
+                throw new ArgumentException("Data de nascimento nï¿½o pode ser nula");
             }
             else
             {
@@ -91,16 +89,12 @@ namespace mais_consultas_api.Models
 
         public void SetEmail(string email) =>
             Email = string.IsNullOrWhiteSpace(email)
-                ? throw new ArgumentException("Email não pode ser nulo")
+                ? throw new ArgumentException("Email nï¿½o pode ser nulo")
                 : email;
 
         public void SetPassword(string password) =>
             Password = string.IsNullOrWhiteSpace(password)
-                ? throw new ArgumentException("Senha não pode ser nula")
+                ? throw new ArgumentException("Senha nï¿½o pode ser nula")
                 : password;
-
-
-
-
     }
 }

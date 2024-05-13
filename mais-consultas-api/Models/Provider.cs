@@ -29,7 +29,7 @@ namespace mais_consultas_api.Models
         [JsonIgnore]
         public virtual Professional Professional { get; set; }
 
-        protected Provider() { }
+        public Provider() { }
 
         public Provider(int id, string name, string cnpj, string phoneNumber, string email)
         {
