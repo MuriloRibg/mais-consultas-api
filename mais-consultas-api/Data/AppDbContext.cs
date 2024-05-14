@@ -9,6 +9,7 @@ namespace mais_consultas_api.Data
         public DbSet<Professional> Professionals { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Patient> Patient { get; set; }
+        public DbSet<Models.Appointment> Appointments { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -22,6 +23,4 @@ namespace mais_consultas_api.Data
                 .HasForeignKey<Professional>(professional => professional.Id_Provider);
         }
     }
-
-    public DbSet<Professional> Professionals { get; set; }
 }
