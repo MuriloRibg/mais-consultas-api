@@ -17,9 +17,9 @@ namespace mais_consultas_api.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Professional>()
-                .HasOne(professional => professional.Provider)
-                .WithOne(provider => provider.Professional)
+            builder.Entity<Models.Provider>()
+                .HasOne(provider => provider.Professional)
+                .WithOne(professional => professional.Provider)
                 .HasForeignKey<Professional>(professional => professional.Id_Provider);
         }
     }
