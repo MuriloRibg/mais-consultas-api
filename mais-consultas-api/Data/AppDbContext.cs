@@ -10,6 +10,7 @@ namespace mais_consultas_api.Data
         public DbSet<Address> Address { get; set; }
         public DbSet<Patient> Patient { get; set; }
         public DbSet<Models.Appointment> Appointments { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
