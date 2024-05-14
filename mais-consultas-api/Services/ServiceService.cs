@@ -1,9 +1,6 @@
 ﻿using mais_consultas_api.Data;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace mais_consultas_api.Services
 {
@@ -43,33 +40,21 @@ namespace mais_consultas_api.Services
         public void Remove(int id)
         {
             Service serviceToRemove = _context.Services.FirstOrDefault(y => y.Id == id);
-            if (serviceToRemove != null)
-            {
-                _context.Services.Remove(serviceToRemove);
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Service not found");
-            }
+            if (serviceToRemove == null) throw new Exception("Service not found");
+            _context.Services.Remove(serviceToRemove);
+            _context.SaveChanges();
         }
 
         public Service Update(int id, decimal price, string name)
         {
             Service serviceToUpdate = _context.Services.FirstOrDefault(y => y.Id == id);
-            if (serviceToUpdate != null)
-            {
-                serviceToUpdate.Price = price;
-                serviceToUpdate.Name = name;
+            if (serviceToUpdate == null) throw new Exception("Service not found");
 
-                _context.SaveChanges();
+            serviceToUpdate.Price = price;
+            serviceToUpdate.Name = name;
 
-                return serviceToUpdate;
-            }
-            else
-            {
-                throw new Exception("Service not found");
-            }
+            _context.SaveChanges();
+            return serviceToUpdate;
         }
     }
 }

@@ -1,24 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using mais_consultas_api.Models;
 
-namespace mais_consultas_api.Models
+namespace mais_consultas_api.Services.Interfaces
 {
-    public class Service
+    public interface IServiceService
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-
-        [Required]
-        public decimal Price { get; set; }
-
-        [Required]
-        [StringLength(45)]
-        public string Name { get; set; }
-
-        // Constructor
-        public Service()
-        {
-        }
+        Service Add(decimal price, string name);
+        IEnumerable<Service> GetAll();
+        Service Get(int id);
+        void Remove(int id);
+        Service Update(int id, decimal price, string name);
     }
 }

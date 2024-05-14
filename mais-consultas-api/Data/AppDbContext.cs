@@ -16,10 +16,11 @@ namespace mais_consultas_api.Data
                 .WithOne(professional => professional.Provider)
                 .HasForeignKey<Professional>(professional => professional.Id_Provider);
         }
-        
+
         public DbSet<Models.Provider> Providers { get; set; }
         public DbSet<Professional> Professionals { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Patient> Patient { get; set; }
+        public DbSet<Service> Services { get; set; }
     }
 }

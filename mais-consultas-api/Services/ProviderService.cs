@@ -35,11 +35,11 @@ namespace mais_consultas_api.Services
 
         public Result Update(ProviderUpdateRequest providerUpdateRequest, int id)
         {
-            Provider aula = _context.Providers.FirstOrDefault(p => p.Id == id);
+            Provider provider = _context.Providers.FirstOrDefault(p => p.Id == id);
 
-            if (aula is null) return Result.Fail("Provider não encontrado!");
+            if (provider is null) return Result.Fail("Provider não encontrado!");
 
-            _mapper.Map(providerUpdateRequest, aula);
+            _mapper.Map(providerUpdateRequest, provider);
             _context.SaveChanges();
 
             return Result.Ok();
