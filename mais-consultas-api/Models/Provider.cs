@@ -24,10 +24,11 @@ namespace mais_consultas_api.Models
         [MaxLength(45)] 
         public string Email { get; protected set; }
 
-        public DateTime? DeleteAt { get; set; }
-        
         [JsonIgnore]
         public virtual Professional Professional { get; set; }
+
+        [JsonIgnore]
+        public virtual Appointment Appointment { get; set; }
 
         public Provider() { }
 
@@ -62,10 +63,10 @@ namespace mais_consultas_api.Models
 
             PhoneNumber = phoneNumber.Length switch
             {
-                > 15 =>
-                    throw new ArgumentException("Número de telefone não ter mais de 15 digitos."),
-                < 15 =>
-                    throw new ArgumentException("Número de telefone não ter menos de 15 digitos."),
+                > 13 =>
+                    throw new ArgumentException("Número de telefone não ter mais de 13 digitos."),
+                < 13 =>
+                    throw new ArgumentException("Número de telefone não ter menos de 13 digitos."),
                 _ => phoneNumber
             };
         }

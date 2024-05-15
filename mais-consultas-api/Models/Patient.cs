@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace mais_consultas_api.Models
 {
@@ -32,10 +33,12 @@ namespace mais_consultas_api.Models
         [StringLength(50)]
         public string Password { get; set; }
 
+        [JsonIgnore]
+        public virtual Appointment Appointment { get; set; }
+
         //Constructor
-        public Patient(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public Patient(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
-            SetId(id);
             SetCpf(cpf);
             SetName(name);
             SetPhoneNumber(phoneNumber);
@@ -66,9 +69,9 @@ namespace mais_consultas_api.Models
 
             PhoneNumber = phoneNumber.Length switch
             {
-                > 15 =>
+                > 13 =>
                     throw new ArgumentException("N�mero de telefone n�o ter mais de 15 digitos."),
-                < 15 =>
+                < 13 =>
                     throw new ArgumentException("N�mero de telefone n�o ter menos de 15 digitos."),
                 _ => phoneNumber
             };

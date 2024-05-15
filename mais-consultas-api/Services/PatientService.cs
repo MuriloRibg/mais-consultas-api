@@ -8,9 +8,9 @@ namespace mais_consultas_api.Services
     {
         private readonly AppDbContext _context = context;
 
-        public Patient Add(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public Patient Add(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
-            Patient patient = new(id, cpf, name, phoneNumber, birthdayDate, email, password);
+            Patient patient = new(cpf, name, phoneNumber, birthdayDate, email, password);
 
             _context.Patient.Add(patient);
 

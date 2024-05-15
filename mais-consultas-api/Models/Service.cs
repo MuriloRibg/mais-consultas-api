@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace mais_consultas_api.Models
 {
@@ -14,6 +15,9 @@ namespace mais_consultas_api.Models
         [Required]
         [StringLength(45)]
         public string Name { get; set; }
+
+        [JsonIgnore]
+        public Professional Professional { get; set; }
 
         // Constructor
         public Service()

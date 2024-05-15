@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace mais_consultas_api.Models
 {
@@ -11,18 +12,23 @@ namespace mais_consultas_api.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        [Required]
-        public string Service { get; set; }
+        [Required] 
+        public int Id_Service { get; set; }
+        public virtual Service Service { get; set; }
 
         [Required]
         public int Id_Provider { get; set; }
         public virtual Provider Provider { get; set; }
+        
+        [JsonIgnore] 
+        public virtual Appointment Appointment { get; set; }
 
         public Professional()
         {
             
         }
-        public Professional(string name, string service, Provider provider)
+        
+        public Professional(string name, Service service, Provider provider)
         {
             SetName(name);
             SetService(service);
@@ -37,7 +43,7 @@ namespace mais_consultas_api.Models
             Name = name;
         }
 
-        public void SetService(string service)
+        public void SetService(Service service)
         {
             Service = service;
         }
