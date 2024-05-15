@@ -19,9 +19,9 @@ namespace mais_consultas_api.Services
             return patient;
         }
 
-        public Patient Get(int id)
-        {
-            return _context.Patient.Where(x => x.Id == id).First();
+        public Patient? Get(int id)
+        { 
+             return _context.Patient.FirstOrDefault(x => x.Id == id); ;
         }
 
         public void Remove(int id)

@@ -15,9 +15,9 @@ namespace mais_consultas_api.Services
             Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
             if (service is null) throw new Exception("Service não encontrado");
             
-            Professional professional = new(name, service, provider);
+            Professional professional = new(name, idService, idProvider);
 
-            _context.Professionals.Add(professional);
+            _context.Add(professional);
             _context.SaveChanges();
             return professional;
         }
@@ -48,8 +48,8 @@ namespace mais_consultas_api.Services
             
             Professional professional = _context.Professionals.Where(y => y.Id == id).First();
             professional.SetName(name);
-            professional.SetService(service);
-            professional.SetProvider(provider);
+            professional.SetService(idProvider);
+            professional.SetProvider(idService);
 
             _context.Professionals.Update(professional);
 

@@ -120,8 +120,8 @@ namespace mais_consultas_api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Professionals_Services_Id_Provider",
-                        column: x => x.Id_Provider,
+                        name: "FK_Professionals_Services_Id_Service",
+                        column: x => x.Id_Service,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -186,6 +186,12 @@ namespace mais_consultas_api.Migrations
                 name: "IX_Professionals_Id_Provider",
                 table: "Professionals",
                 column: "Id_Provider",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Professionals_Id_Service",
+                table: "Professionals",
+                column: "Id_Service",
                 unique: true);
         }
 

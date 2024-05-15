@@ -1,5 +1,4 @@
 using mais_consultas_api.Models;
-using mais_consultas_api.Services;
 using mais_consultas_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,8 +20,8 @@ namespace mais_consultas_api.Controllers
         [HttpGet("{id}")]
         public ActionResult<Patient> Get(int id)
         {
-            var response = _patientService.Get(id);
-            return Ok(response);
+            Patient? response = _patientService.Get(id);
+            return response is null ? BadRequest("Registro não encontrado") : Ok(response);
         }
 
         [HttpPost]

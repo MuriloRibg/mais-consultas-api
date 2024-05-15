@@ -17,7 +17,7 @@ namespace mais_consultas_api.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public Professional Professional { get; set; }
+        public virtual Professional Professional { get; set; }
 
         // Constructor
         public Service()

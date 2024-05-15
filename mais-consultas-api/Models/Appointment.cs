@@ -1,6 +1,5 @@
 ﻿using mais_consultas_api.Models.Enumerators;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mais_consultas_api.Models
 {
@@ -14,24 +13,21 @@ namespace mais_consultas_api.Models
 
         [Required]
         public DateTime DateTime { get; protected set; }
-
-        [ForeignKey("Professional")]
-        public int Id_Professional { get; protected set; }
-
+        
         [Required]
-        public Professional Professional { get; protected set; }
-
-        [ForeignKey("Provider")]
+        public int Id_Professional { get; protected set; }
+        
+        public virtual Professional Professional { get; protected set; }
+        
+        [Required]
         public int Id_Provider { get; set; }
 
+        public virtual Provider Provider { get; protected set; }
+        
         [Required]
-        public Provider Provider { get; protected set; }
-
-        [ForeignKey("Patient")]
         public int Id_Patient { get; set; }
 
-        [Required]
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
 
         public Appointment()
         {

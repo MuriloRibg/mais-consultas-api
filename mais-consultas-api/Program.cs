@@ -34,6 +34,9 @@ builder.Services.Scan(scan => scan
     .WithScopedLifetime()
 );
 
+builder.Services.AddControllers().AddNewtonsoftJson(x => 
+    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.

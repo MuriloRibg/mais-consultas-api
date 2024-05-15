@@ -26,7 +26,7 @@ namespace mais_consultas_api.Data
             builder.Entity<Service>()
                 .HasOne(service => service.Professional)
                 .WithOne(professional => professional.Service)
-                .HasForeignKey<Professional>(professional => professional.Id_Provider);
+                .HasForeignKey<Professional>(professional => professional.Id_Service);
             
             builder.Entity<Models.Provider>()
                 .HasOne(provider => provider.Appointment)

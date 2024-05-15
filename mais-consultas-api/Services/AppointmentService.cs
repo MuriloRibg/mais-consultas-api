@@ -33,7 +33,7 @@ namespace mais_consultas_api.Services
 
             Appointment appointment = new(dateTime, professional, provider, patient);
 
-            _context.Appointments.Add(appointment);
+            _context.Add(appointment);
             _context.SaveChanges();
             return Result.Ok(appointment);
         }
@@ -76,7 +76,7 @@ namespace mais_consultas_api.Services
             appointment.Value.SetProvider(provider);  
             appointment.Value.SetPatient(patient);
 
-            _context.Appointments.Update(appointment.Value);
+            _context.Update(appointment.Value);
             _context.SaveChanges();
             return Result.Ok(appointment.Value);
         }

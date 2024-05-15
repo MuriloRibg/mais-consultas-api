@@ -28,11 +28,11 @@ namespace mais_consultas_api.Models
             
         }
         
-        public Professional(string name, Service service, Provider provider)
+        public Professional(string name, int idService, int IdProvider)
         {
             SetName(name);
-            SetService(service);
-            SetProvider(provider);
+            SetService(idService);
+            SetProvider(IdProvider);
         }
 
         public void SetName(string name)
@@ -43,14 +43,14 @@ namespace mais_consultas_api.Models
             Name = name;
         }
 
-        public void SetService(Service service)
+        public void SetService(int idService)
         {
-            Service = service;
+            Id_Service = idService;
         }
 
-        public void SetProvider(Provider provider)
+        public void SetProvider(int IdProvider)
         {
-            Provider = provider;
+            Id_Provider = IdProvider;
         }
     }
 }

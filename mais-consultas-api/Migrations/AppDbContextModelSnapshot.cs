@@ -85,14 +85,11 @@ namespace mais_consultas_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id_Patient")
-                        .IsUnique();
+                    b.HasIndex("Id_Patient");
 
-                    b.HasIndex("Id_Professional")
-                        .IsUnique();
+                    b.HasIndex("Id_Professional");
 
-                    b.HasIndex("Id_Provider")
-                        .IsUnique();
+                    b.HasIndex("Id_Provider");
 
                     b.ToTable("Appointments");
                 });
@@ -159,8 +156,9 @@ namespace mais_consultas_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id_Provider")
-                        .IsUnique();
+                    b.HasIndex("Id_Provider");
+
+                    b.HasIndex("Id_Service");
 
                     b.ToTable("Professionals");
                 });
@@ -256,7 +254,7 @@ namespace mais_consultas_api.Migrations
 
                     b.HasOne("mais_consultas_api.Models.Service", "Service")
                         .WithOne("Professional")
-                        .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Provider")
+                        .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Service")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -267,29 +265,24 @@ namespace mais_consultas_api.Migrations
 
             modelBuilder.Entity("mais_consultas_api.Models.Patient", b =>
                 {
-                    b.Navigation("Appointment")
-                        .IsRequired();
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("mais_consultas_api.Models.Professional", b =>
                 {
-                    b.Navigation("Appointment")
-                        .IsRequired();
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("mais_consultas_api.Models.Provider", b =>
                 {
-                    b.Navigation("Appointment")
-                        .IsRequired();
+                    b.Navigation("Appointment");
 
-                    b.Navigation("Professional")
-                        .IsRequired();
+                    b.Navigation("Professional");
                 });
 
             modelBuilder.Entity("mais_consultas_api.Models.Service", b =>
                 {
-                    b.Navigation("Professional")
-                        .IsRequired();
+                    b.Navigation("Professional");
                 });
 #pragma warning restore 612, 618
         }
