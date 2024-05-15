@@ -8,16 +8,17 @@ namespace mais_consultas_api.Services
     {
         private readonly AppDbContext _context = context;
 
-        public Professional Add(string name, string service, int idProvider)
+        public Professional Add(string name, int idService, int idProvider)
         {
             Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
             if (provider is null) throw new Exception("Provider não encontrado");
+            Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
+            if (service is null) throw new Exception("Service não encontrado");
+            
             Professional professional = new(name, service, provider);
 
             _context.Professionals.Add(professional);
-
             _context.SaveChanges();
-
             return professional;
         }
 
@@ -38,10 +39,12 @@ namespace mais_consultas_api.Services
             _context.SaveChanges();
         }
 
-        public Professional Update(int id, string name, string service, int idProvider)
+        public Professional Update(int id, string name, int idService, int idProvider)
         {
             Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
             if (provider is null) throw new Exception("Provider não encontrado");
+            Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
+            if (service is null) throw new Exception("Service não encontrado");
             
             Professional professional = _context.Professionals.Where(y => y.Id == id).First();
             professional.SetName(name);

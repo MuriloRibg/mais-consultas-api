@@ -26,9 +26,9 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Patient> Post(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public ActionResult<Patient> Post(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
-            var response = _patientService.Add(id, cpf, name, phoneNumber, birthdayDate, email, password);
+            var response = _patientService.Add(cpf, name, phoneNumber, birthdayDate, email, password);
             return Ok(response);
         }
 

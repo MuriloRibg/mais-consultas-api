@@ -1,5 +1,5 @@
 using mais_consultas_api.Data;
-using mais_consultas_api.Data.Provider.Profiles;
+using mais_consultas_api.Profiles;
 using mais_consultas_api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;

@@ -49,7 +49,7 @@ namespace mais_consultas_api.Services
                 query = query.Where(a => a.Professional.Id == request.ProfessionalId);
 
             if(request.ProviderId is not null)
-                query = query.Where(a => a.ProviderId == request.ProviderId);
+                query = query.Where(a => a.Id_Provider == request.ProviderId);
 
             return Result.Ok(query.AsEnumerable());
         }
@@ -57,11 +57,7 @@ namespace mais_consultas_api.Services
         public Result<Appointment> Get(int id)
         {
             var appointment = _context.Appointments.FirstOrDefault(x => x.Id == id);
-
-            if (appointment is null)
-                return Result.Fail("Appointment not found");
-
-            return Result.Ok(appointment);
+            return appointment is null ? Result.Fail("Appointment not found") : Result.Ok(appointment);
         }
 
         public Result<Appointment> Update(int id, DateTime dateTime, int professionalId, int providerId, int patientId)
