@@ -1,4 +1,4 @@
-﻿namespace mais_consultas_api.Data.Appointment.Requests
+﻿namespace mais_consultas_api.Data.AppointmentDto.Requests
 {
     public class AppointmentGetRequest
     {

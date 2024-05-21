@@ -1,6 +1,8 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using mais_consultas_api.Data;
-using mais_consultas_api.Data.Appointment.Requests;
+using mais_consultas_api.Data.AppointmentDto.Requests;
+using mais_consultas_api.Data.AppointmentDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Models.Enumerators;
 using mais_consultas_api.Services.Interfaces;
@@ -10,32 +12,34 @@ namespace mais_consultas_api.Services
     public class AppointmentService : IAppointmentService
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public AppointmentService(AppDbContext context)
+        public AppointmentService(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public Result<Appointment> Add(DateTime dateTime, int professionalId, int providerId, int patientId)
+        public AppointmentResponse Add(DateTime dateTime, int professionalId, int providerId, int patientId)
         {
             Professional? professional = _context.Professionals.FirstOrDefault(x => x.Id == professionalId);
             Provider? provider = _context.Providers.FirstOrDefault(x => x.Id == providerId);
             Patient? patient = _context.Patient.FirstOrDefault(x => x.Id == patientId);
 
             if (professional is null)
-                return Result.Fail("Professional not found");
+                throw new Exception("ProfessionalDto not found");
 
             if (provider is null)
-                return Result.Fail("Provider not found");
+                throw new Exception("ProviderDto not found");
 
             if (patient is null)
-                return Result.Fail("Patient not found");
+                throw new Exception("PatientDto not found");
 
             Appointment appointment = new(dateTime, professional, provider, patient);
-
-            _context.Appointments.Add(appointment);
+            _context.Add(appointment);
             _context.SaveChanges();
-            return Result.Ok(appointment);
+            AppointmentResponse response = _mapper.Map<AppointmentResponse>(appointment);
+            return response;
         }
 
         public Result<IEnumerable<Appointment>> GetAll(AppointmentGetRequest request)
@@ -57,7 +61,7 @@ namespace mais_consultas_api.Services
         public Result<Appointment> Get(int id)
         {
             var appointment = _context.Appointments.FirstOrDefault(x => x.Id == id);
-            return appointment is null ? Result.Fail("Appointment not found") : Result.Ok(appointment);
+            return appointment is null ? Result.Fail("AppointmentDto not found") : Result.Ok(appointment);
         }
 
         public Result<Appointment> Update(int id, DateTime dateTime, int professionalId, int providerId, int patientId)

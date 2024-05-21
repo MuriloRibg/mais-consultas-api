@@ -1,7 +1,7 @@
 using AutoMapper;
 using mais_consultas_api.Data;
-using mais_consultas_api.Data.Provider.Requests;
-using mais_consultas_api.Data.Provider.Responses;
+using mais_consultas_api.Data.ProviderDto.Requests;
+using mais_consultas_api.Data.ProviderDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 
@@ -35,7 +35,7 @@ namespace mais_consultas_api.Services
         public ProviderReadResponse Update(ProviderUpdateRequest providerUpdateRequest, int id)
         {
             Provider provider = _context.Providers.FirstOrDefault(p => p.Id == id);
-            if (provider is null) throw new Exception("Provider não encontrado!");
+            if (provider is null) throw new Exception("ProviderDto não encontrado!");
 
             provider.SetName(providerUpdateRequest.Name);
             provider.SetEmail(providerUpdateRequest.Email);
@@ -49,7 +49,7 @@ namespace mais_consultas_api.Services
         public void Delete(int idProvider)
         {
             Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
-            if (provider is null) throw new Exception("Provider não encontrado!");
+            if (provider is null) throw new Exception("ProviderDto não encontrado!");
 
             _context.Remove(provider);
             _context.SaveChanges();

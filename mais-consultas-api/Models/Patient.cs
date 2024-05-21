@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace mais_consultas_api.Models
 {
@@ -33,8 +33,7 @@ namespace mais_consultas_api.Models
         [StringLength(50)]
         public string Password { get; set; }
 
-        [JsonIgnore]
-        public virtual Appointment Appointment { get; set; }
+        public Appointment Appointment { get; set; }
 
         //Constructor
         public Patient(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)

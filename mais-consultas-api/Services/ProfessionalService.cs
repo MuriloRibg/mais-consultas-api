@@ -1,25 +1,30 @@
+using AutoMapper;
 using mais_consultas_api.Data;
+using mais_consultas_api.Data.ProfessionalDto.Response;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 
 namespace mais_consultas_api.Services
 {
-    public class ProfessionalService(AppDbContext context) : IProfessionalService
+    public class ProfessionalService(AppDbContext context, IMapper mapper) : IProfessionalService
     {
         private readonly AppDbContext _context = context;
+        private readonly IMapper _mapper = mapper;
 
-        public Professional Add(string name, int idService, int idProvider)
+        public ProfessionalResponse Add(string name, int idService, int idProvider)
         {
             Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
-            if (provider is null) throw new Exception("Provider não encontrado");
+            if (provider is null) throw new Exception("ProviderDto não encontrado");
             Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
-            if (service is null) throw new Exception("Service não encontrado");
+            if (service is null) throw new Exception("ServiceDto não encontrado");
             
             Professional professional = new(name, service, provider);
-
-            _context.Professionals.Add(professional);
+            
+            _context.Add(professional);
             _context.SaveChanges();
-            return professional;
+            ProfessionalResponse response = _mapper.Map<ProfessionalResponse>(professional);
+            
+            return response;
         }
 
         public IEnumerable<Professional> GetAll()
@@ -27,9 +32,9 @@ namespace mais_consultas_api.Services
             return _context.Professionals.AsEnumerable();
         }
 
-        public Professional Get(int id)
+        public Professional? Get(int id)
         {
-            return _context.Professionals.Where(x => x.Id == id).First();
+            return _context.Professionals.FirstOrDefault(x => x.Id == id);
         }
 
         public void Remove(int id)
@@ -42,9 +47,9 @@ namespace mais_consultas_api.Services
         public Professional Update(int id, string name, int idService, int idProvider)
         {
             Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
-            if (provider is null) throw new Exception("Provider não encontrado");
+            if (provider is null) throw new Exception("ProviderDto não encontrado");
             Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
-            if (service is null) throw new Exception("Service não encontrado");
+            if (service is null) throw new Exception("ServiceDto não encontrado");
             
             Professional professional = _context.Professionals.Where(y => y.Id == id).First();
             professional.SetName(name);

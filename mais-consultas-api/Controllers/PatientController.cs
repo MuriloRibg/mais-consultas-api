@@ -1,5 +1,5 @@
+using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
-using mais_consultas_api.Services;
 using mais_consultas_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace mais_consultas_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/patient")]
     [ApiController]
     public class PatientController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace mais_consultas_api.Controllers
             _patientService = patientService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public ActionResult<Patient> Get(int id)
         {
             var response = _patientService.Get(id);
@@ -26,20 +26,20 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Patient> Post(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public ActionResult<PatientResponse> Post(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
-            var response = _patientService.Add(cpf, name, phoneNumber, birthdayDate, email, password);
+            PatientResponse response = _patientService.Add(cpf, name, phoneNumber, birthdayDate, email, password);
             return Ok(response);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public ActionResult<Patient> Put(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
             var response = _patientService.Update(id, cpf, name, phoneNumber, birthdayDate, email, password);
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
             _patientService.Remove(id);
