@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using mais_consultas_api.Data;
 using mais_consultas_api.Profiles;
 using mais_consultas_api.Services;
@@ -33,6 +34,9 @@ builder.Services.Scan(scan => scan
     .AsImplementedInterfaces()
     .WithScopedLifetime()
 );
+
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 WebApplication app = builder.Build();
 

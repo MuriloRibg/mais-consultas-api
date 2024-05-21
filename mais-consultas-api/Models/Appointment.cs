@@ -14,23 +14,17 @@ namespace mais_consultas_api.Models
 
         [Required]
         public DateTime DateTime { get; protected set; }
-
+        
         [ForeignKey("Professional")]
         public int Id_Professional { get; protected set; }
-
-        [Required]
         public Professional Professional { get; protected set; }
-
+        
         [ForeignKey("Provider")]
         public int Id_Provider { get; set; }
-
-        [Required]
         public Provider Provider { get; protected set; }
 
         [ForeignKey("Patient")]
         public int Id_Patient { get; set; }
-
-        [Required]
         public Patient Patient { get; set; }
 
         public Appointment()
@@ -65,25 +59,17 @@ namespace mais_consultas_api.Models
 
         public void SetProfessional(Professional professional)
         {
-            Professional = professional;
             Id_Professional = professional.Id;
         }
 
         public void SetProvider(Provider provider)
         {
-            Provider = provider;
             Id_Provider = provider.Id;
         }
 
         public void SetPatient(Patient patient)
         {
-            Patient = patient;
             Id_Patient = patient.Id;
-        }
-
-        internal void SetStatus(object canceled)
-        {
-            throw new NotImplementedException();
         }
     }
 }

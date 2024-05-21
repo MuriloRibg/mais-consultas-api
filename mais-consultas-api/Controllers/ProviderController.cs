@@ -1,4 +1,4 @@
-using mais_consultas_api.Data.Provider.Requests;
+using mais_consultas_api.Data.ProviderDto.Requests;
 using mais_consultas_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +26,7 @@ namespace mais_consultas_api.Controllers
         }
 
         /// <summary>
-        /// Insert Provider
+        /// Insert ProviderDto
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace mais_consultas_api.Controllers
             => Ok(_providerService.Insert(request));
 
         /// <summary>
-        /// Update Provider
+        /// Update ProviderDto
         /// </summary>
         /// <param name="request"></param>
         /// <param name="id"></param>
@@ -45,7 +45,7 @@ namespace mais_consultas_api.Controllers
             Ok(_providerService.Update(request, id));
 
         /// <summary>
-        /// Delete Provider
+        /// Delete ProviderDto
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

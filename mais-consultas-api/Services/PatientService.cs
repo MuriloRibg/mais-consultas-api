@@ -1,14 +1,17 @@
+using AutoMapper;
 using mais_consultas_api.Data;
+using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 
 namespace mais_consultas_api.Services
 {
-    public class PatientService(AppDbContext context) : IPatientService
+    public class PatientService(AppDbContext context, IMapper mapper) : IPatientService
     {
         private readonly AppDbContext _context = context;
+        private readonly IMapper _mapper = mapper;
 
-        public Patient Add(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public PatientResponse Add(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
             Patient patient = new(cpf, name, phoneNumber, birthdayDate, email, password);
 
@@ -16,7 +19,7 @@ namespace mais_consultas_api.Services
 
             _context.SaveChanges();
 
-            return patient;
+            return _mapper.Map<PatientResponse>(patient);
         }
 
         public Patient Get(int id)

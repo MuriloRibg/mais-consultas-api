@@ -40,7 +40,7 @@ namespace mais_consultas_api.Services
         public void Remove(int id)
         {
             Service serviceToRemove = _context.Services.FirstOrDefault(y => y.Id == id);
-            if (serviceToRemove == null) throw new Exception("Service not found");
+            if (serviceToRemove == null) throw new Exception("ServiceDto not found");
             _context.Services.Remove(serviceToRemove);
             _context.SaveChanges();
         }
@@ -48,7 +48,7 @@ namespace mais_consultas_api.Services
         public Service Update(int id, decimal price, string name)
         {
             Service serviceToUpdate = _context.Services.FirstOrDefault(y => y.Id == id);
-            if (serviceToUpdate == null) throw new Exception("Service not found");
+            if (serviceToUpdate == null) throw new Exception("ServiceDto not found");
 
             serviceToUpdate.Price = price;
             serviceToUpdate.Name = name;

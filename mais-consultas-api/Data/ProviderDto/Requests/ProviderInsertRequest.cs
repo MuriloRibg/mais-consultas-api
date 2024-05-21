@@ -1,4 +1,4 @@
-namespace mais_consultas_api.Data.Provider.Requests
+namespace mais_consultas_api.Data.ProviderDto.Requests
 {
     public record ProviderInsertRequest
     {

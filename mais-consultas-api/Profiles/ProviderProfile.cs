@@ -1,6 +1,6 @@
 using AutoMapper;
-using mais_consultas_api.Data.Provider.Requests;
-using mais_consultas_api.Data.Provider.Responses;
+using mais_consultas_api.Data.ProviderDto.Requests;
+using mais_consultas_api.Data.ProviderDto.Responses;
 
 namespace mais_consultas_api.Profiles
 {
