@@ -162,6 +162,9 @@ namespace mais_consultas_api.Migrations
                     b.HasIndex("Id_Provider")
                         .IsUnique();
 
+                    b.HasIndex("Id_Service")
+                        .IsUnique();
+
                     b.ToTable("Professionals");
                 });
 
@@ -256,7 +259,7 @@ namespace mais_consultas_api.Migrations
 
                     b.HasOne("mais_consultas_api.Models.Service", "Service")
                         .WithOne("Professional")
-                        .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Provider")
+                        .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Service")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

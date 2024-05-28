@@ -20,9 +20,9 @@ namespace mais_consultas_api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult List()
+        public IActionResult List([FromQuery] long? idService)
         {
-            return Ok(_providerService.List());
+            return Ok(_providerService.List(idService));
         }
 
         /// <summary>

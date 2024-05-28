@@ -5,7 +5,7 @@ namespace mais_consultas_api.Services.Interfaces
 {
     public interface IProviderService
     {
-        List<ProviderReadResponse> List();
+        List<ProviderReadResponse> List(long? idService);
         ProviderReadResponse Insert(ProviderInsertRequest providerInsertRequest);
         ProviderReadResponse Update(ProviderUpdateRequest providerUpdateRequest, int id);
         void Delete(int idProvider);
