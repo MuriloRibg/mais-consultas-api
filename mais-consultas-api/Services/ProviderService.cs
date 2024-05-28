@@ -18,9 +18,13 @@ namespace mais_consultas_api.Services
             _context = context;
         }
 
-        public List<ProviderReadResponse> List()
+        public List<ProviderReadResponse> List(long? idService)
         {
-            List<Provider> providers = _context.Providers.ToList();
+            IQueryable<Provider> providers = _context.Providers.AsQueryable();
+
+            if (idService is > 0)
+                providers = providers.Where(p => p.Professional.Service.Id == idService);
+                
             return _mapper.Map<List<ProviderReadResponse>>(providers);
         }
 
