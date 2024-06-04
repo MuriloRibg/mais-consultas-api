@@ -1,5 +1,6 @@
 using AutoMapper;
 using mais_consultas_api.Data;
+using mais_consultas_api.Data.PatientDto.Requests;
 using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
@@ -11,9 +12,9 @@ namespace mais_consultas_api.Services
         private readonly AppDbContext _context = context;
         private readonly IMapper _mapper = mapper;
 
-        public PatientResponse Add(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public PatientResponse Add(PatientInserirRequest request)
         {
-            Patient patient = new(cpf, name, phoneNumber, birthdayDate, email, password);
+            Patient patient = new(request.Cpf, request.Name, request.PhoneNumber, request.BirthdayDate, request.Email, request.Password);
 
             _context.Patient.Add(patient);
 
