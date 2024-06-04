@@ -66,14 +66,8 @@ namespace mais_consultas_api.Models
             if (string.IsNullOrWhiteSpace(phoneNumber))
                 throw new ArgumentException("N�mero de n�o pode ser nulo");
 
-            PhoneNumber = phoneNumber.Length switch
-            {
-                > 13 =>
-                    throw new ArgumentException("N�mero de telefone n�o ter mais de 15 digitos."),
-                < 13 =>
-                    throw new ArgumentException("N�mero de telefone n�o ter menos de 15 digitos."),
-                _ => phoneNumber
-            };
+            PhoneNumber = phoneNumber;
+    
         }
 
         public void SetBirthdayDate(DateTime birthdayDate)

@@ -1,3 +1,4 @@
+using mais_consultas_api.Data.PatientDto.Requests;
 using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
@@ -26,9 +27,9 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PatientResponse> Post(string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public ActionResult<PatientResponse> Post([FromBody] PatientInserirRequest request)
         {
-            PatientResponse response = _patientService.Add(cpf, name, phoneNumber, birthdayDate, email, password);
+            PatientResponse response = _patientService.Add(request);
             return Ok(response);
         }
 
