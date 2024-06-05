@@ -25,6 +25,8 @@ namespace mais_consultas_api.Services
             var key = Encoding.ASCII.GetBytes(options.Key);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Issuer = options.Issuer,
+                Audience = options.Audience,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("Name", patient.Name),

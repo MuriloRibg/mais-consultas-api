@@ -1,4 +1,5 @@
 using mais_consultas_api.Data.PatientDto.Requests;
+using mais_consultas_api.Data.PatientDto.Responses;
 using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
@@ -45,6 +46,13 @@ namespace mais_consultas_api.Controllers
         {
             _patientService.Remove(id);
             return Ok();
+        }
+
+        [HttpPost("login")]
+        public ActionResult<PatientSignInResponse> Login([FromBody] PatientSignInRequest request)
+        {
+            PatientSignInResponse response = _patientService.SignIn(request.Email, request.Password);
+            return Ok(response);
         }
     }
 }
