@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using mais_consultas_api.Data;
+using mais_consultas_api.Models.Options;
 using mais_consultas_api.Profiles;
 using mais_consultas_api.Services;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 //Injetando o AutoMapper
 builder.Services.AddAutoMapper(typeof(ProviderProfile));
+
+// Importando as configurações de Token JWT.
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
 // Add services to the container.
 
