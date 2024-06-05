@@ -3,6 +3,7 @@ using mais_consultas_api.Data.PatientDto.Responses;
 using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,6 +29,7 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult<PatientResponse> Post([FromBody] PatientInserirRequest request)
         {
             PatientResponse response = _patientService.Add(request);
@@ -49,6 +51,7 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public ActionResult<PatientSignInResponse> Login([FromBody] PatientSignInRequest request)
         {
             PatientSignInResponse response = _patientService.SignIn(request.Email, request.Password);
