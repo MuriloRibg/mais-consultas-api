@@ -1,16 +1,18 @@
 using AutoMapper;
 using mais_consultas_api.Data;
 using mais_consultas_api.Data.PatientDto.Requests;
+using mais_consultas_api.Data.PatientDto.Responses;
 using mais_consultas_api.Data.ProfileDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Services.Interfaces;
 
 namespace mais_consultas_api.Services
 {
-    public class PatientService(AppDbContext context, IMapper mapper) : IPatientService
+    public class PatientService(AppDbContext context, IMapper mapper, ITokenService tokenService) : IPatientService
     {
         private readonly AppDbContext _context = context;
         private readonly IMapper _mapper = mapper;
+        private readonly ITokenService _tokenService = tokenService;
 
         public PatientResponse Add(PatientInserirRequest request)
         {
@@ -52,6 +54,21 @@ namespace mais_consultas_api.Services
 
             _context.SaveChanges();
             return patient;
+        }
+
+        public PatientSignInResponse SignIn(string email, string password)
+        {
+            Patient? patient = _context.Patient.FirstOrDefault(p => p.Email == email);
+
+            if (patient == null || patient.CheckPassword(password))
+                throw new ArgumentException("Usuário ou senha inválidos.");
+
+            var token = _tokenService.GenerateToken(patient);
+
+            return new PatientSignInResponse()
+            {
+                Token = token
+            };
         }
     }
 }

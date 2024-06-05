@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace mais_consultas_api.Models
 {
@@ -30,7 +31,7 @@ namespace mais_consultas_api.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(60)]
         public string Password { get; set; }
 
         public Appointment Appointment { get; set; }
@@ -87,9 +88,18 @@ namespace mais_consultas_api.Models
                 ? throw new ArgumentException("Email n�o pode ser nulo")
                 : email;
 
-        public void SetPassword(string password) =>
-            Password = string.IsNullOrWhiteSpace(password)
-                ? throw new ArgumentException("Senha n�o pode ser nula")
-                : password;
+        public void SetPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Senha não pode ser nula");
+
+            if(!Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$"))
+                throw new ArgumentException("Senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial");
+
+            Password = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+        }
+
+        public bool CheckPassword(string password) =>
+            BCrypt.Net.BCrypt.EnhancedVerify(password, Password);
     }
 }
