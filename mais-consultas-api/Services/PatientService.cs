@@ -8,39 +8,32 @@ using mais_consultas_api.Services.Interfaces;
 
 namespace mais_consultas_api.Services
 {
-    public class PatientService(AppDbContext context, IMapper mapper, ITokenService tokenService) : IPatientService
+    public class PatientService(AppDbContext _context, IMapper _mapper, ITokenService _tokenService) : IPatientService
     {
-        private readonly AppDbContext _context = context;
-        private readonly IMapper _mapper = mapper;
-        private readonly ITokenService _tokenService = tokenService;
-
         public PatientResponse Add(PatientInserirRequest request)
         {
             Patient patient = new(request.Cpf, request.Name, request.PhoneNumber, request.BirthdayDate, request.Email, request.Password);
-
             _context.Patient.Add(patient);
-
             _context.SaveChanges();
-
             return _mapper.Map<PatientResponse>(patient);
         }
 
         public Patient Get(int id)
         {
-            return _context.Patient.Where(x => x.Id == id).First();
+            return _context.Patient.First(x => x.Id == id);
         }
 
         public void Remove(int id)
         {
-            Patient patient = _context.Patient.Where(y => y.Id == id).First();
+            Patient patient = _context.Patient.First(y => y.Id == id);
             _context.Patient.Remove(patient);
             _context.SaveChanges();
         }
 
-        public Patient Update(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public Patient Update(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email,
+            string password)
         {
-
-            Patient patient = _context.Patient.Where(y => y.Id == id).First();
+            Patient patient = _context.Patient.First(y => y.Id == id);
             patient.SetId(id);
             patient.SetCpf(cpf);
             patient.SetName(name);
@@ -49,7 +42,6 @@ namespace mais_consultas_api.Services
             patient.SetEmail(email);
             patient.SetPassword(password);
             
-
             _context.Patient.Update(patient);
 
             _context.SaveChanges();
@@ -61,13 +53,14 @@ namespace mais_consultas_api.Services
             Patient? patient = _context.Patient.FirstOrDefault(p => p.Email == email);
 
             if (patient == null || patient.CheckPassword(password))
-                throw new ArgumentException("Usuário ou senha inválidos.");
+                throw new ArgumentException("Usuï¿½rio ou senha invÃ¡lidos.");
 
-            var token = _tokenService.GenerateToken(patient);
+            string token = _tokenService.GenerateToken(patient);
 
-            return new PatientSignInResponse()
+            return new PatientSignInResponse
             {
-                Token = token
+                Token = token,
+                Name = patient.Name
             };
         }
     }
