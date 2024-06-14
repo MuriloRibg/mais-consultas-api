@@ -7,7 +7,7 @@ namespace mais_consultas_api.Services.Interfaces
 {
     public interface IAppointmentService
     {
-        AppointmentResponse Add(DateTime dateTime, int professionalId, int providerId, int patientId);
+        AppointmentResponse Add(DateTime dateTime, int idService, int IdProvider, int IdPatient);
         Result<Appointment> Get(int id);
         Result<IEnumerable<Appointment>> GetAll(AppointmentGetRequest request);
         Result<Appointment> Update(int id, DateTime dateTime, int professionalId, int providerId, int patientId);

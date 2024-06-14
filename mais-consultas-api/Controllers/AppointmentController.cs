@@ -26,7 +26,7 @@ namespace mais_consultas_api.Controllers
 
         [HttpPost]
         public ActionResult<AppointmentResponse> Insert([FromBody] AppointmentInsertRequest request) 
-            =>Ok(appointmentService.Add(request.DateTime, request.ProfessionalId, request.ProviderId, request.PatientId));
+            =>Ok(appointmentService.Add(request.DateTime, request.IdService, request.IdProvider, request.IdPatient));
 
         [HttpPut("{id:int}")]
         public ActionResult<Appointment> Update(int id, [FromBody] AppointmentUpdateRequest request)

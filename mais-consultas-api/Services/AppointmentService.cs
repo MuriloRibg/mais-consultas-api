@@ -12,26 +12,25 @@ namespace mais_consultas_api.Services
 {
     public class AppointmentService(AppDbContext context, IMapper mapper) : IAppointmentService
     {
-        public AppointmentResponse Add(DateTime dateTime, int professionalId, int providerId, int patientId)
+        public AppointmentResponse Add(DateTime dateTime, int idService, int IdProvider, int IdPatient)
         {
-            Professional? professional = context.Professionals.FirstOrDefault(x => x.Id == professionalId);
-            Provider? provider = context.Providers.FirstOrDefault(x => x.Id == providerId);
-            Patient? patient = context.Patient.FirstOrDefault(x => x.Id == patientId);
-
+            Professional? professional = context.Professionals.FirstOrDefault(x => x.Service.Id == idService);
             if (professional is null)
-                throw new Exception("ProfessionalDto not found");
+                throw new Exception("O serviço enviado não possui un Professional");
 
+            Provider? provider = context.Providers.FirstOrDefault(x => x.Id == IdProvider);
             if (provider is null)
                 throw new Exception("ProviderDto not found");
 
+            Patient? patient = context.Patient.FirstOrDefault(x => x.Id == IdPatient);
             if (patient is null)
                 throw new Exception("PatientDto not found");
-
+            
             Appointment appointment = new(dateTime, professional, provider, patient);
+            
             context.Add(appointment);
             context.SaveChanges();
-            AppointmentResponse response = mapper.Map<AppointmentResponse>(appointment);
-            return response;
+            return mapper.Map<AppointmentResponse>(appointment);
         }
 
         public Result<IEnumerable<Appointment>> GetAll(AppointmentGetRequest request)
