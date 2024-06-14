@@ -12,5 +12,6 @@ namespace mais_consultas_api.Services.Interfaces
         Result<IEnumerable<Appointment>> GetAll(AppointmentGetRequest request);
         Result<Appointment> Update(int id, DateTime dateTime, int professionalId, int providerId, int patientId);
         Result Cancel(int id);
+        IList<AppointmentTimesResponse>? GetTimes(AppointmentGetTimeRequest request);
     }
 }

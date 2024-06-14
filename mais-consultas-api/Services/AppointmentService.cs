@@ -6,25 +6,17 @@ using mais_consultas_api.Data.AppointmentDto.Responses;
 using mais_consultas_api.Models;
 using mais_consultas_api.Models.Enumerators;
 using mais_consultas_api.Services.Interfaces;
+using mais_consultas_api.Services.Uteis;
 
 namespace mais_consultas_api.Services
 {
-    public class AppointmentService : IAppointmentService
+    public class AppointmentService(AppDbContext context, IMapper mapper) : IAppointmentService
     {
-        private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
-
-        public AppointmentService(AppDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
-
         public AppointmentResponse Add(DateTime dateTime, int professionalId, int providerId, int patientId)
         {
-            Professional? professional = _context.Professionals.FirstOrDefault(x => x.Id == professionalId);
-            Provider? provider = _context.Providers.FirstOrDefault(x => x.Id == providerId);
-            Patient? patient = _context.Patient.FirstOrDefault(x => x.Id == patientId);
+            Professional? professional = context.Professionals.FirstOrDefault(x => x.Id == professionalId);
+            Provider? provider = context.Providers.FirstOrDefault(x => x.Id == providerId);
+            Patient? patient = context.Patient.FirstOrDefault(x => x.Id == patientId);
 
             if (professional is null)
                 throw new Exception("ProfessionalDto not found");
@@ -36,23 +28,25 @@ namespace mais_consultas_api.Services
                 throw new Exception("PatientDto not found");
 
             Appointment appointment = new(dateTime, professional, provider, patient);
-            _context.Add(appointment);
-            _context.SaveChanges();
-            AppointmentResponse response = _mapper.Map<AppointmentResponse>(appointment);
+            context.Add(appointment);
+            context.SaveChanges();
+            AppointmentResponse response = mapper.Map<AppointmentResponse>(appointment);
             return response;
         }
 
         public Result<IEnumerable<Appointment>> GetAll(AppointmentGetRequest request)
         {
-            IQueryable<Appointment> query = _context.Appointments;
+            IQueryable<Appointment> query = context.Appointments;
 
             if (request.StartDateTime is not null)
-                query = query.Where(a => a.DateTime >= request.StartDateTime && a.DateTime <= (request.EndDateTime ?? request.StartDateTime.Value.AddDays(7)));
+                query = query.Where(a =>
+                    a.DateTime >= request.StartDateTime &&
+                    a.DateTime <= (request.EndDateTime ?? request.StartDateTime.Value.AddDays(7)));
 
             if (request.ProfessionalId is not null)
                 query = query.Where(a => a.Professional.Id == request.ProfessionalId);
 
-            if(request.ProviderId is not null)
+            if (request.ProviderId is not null)
                 query = query.Where(a => a.Id_Provider == request.ProviderId);
 
             return Result.Ok(query.AsEnumerable());
@@ -60,7 +54,7 @@ namespace mais_consultas_api.Services
 
         public Result<Appointment> Get(int id)
         {
-            var appointment = _context.Appointments.FirstOrDefault(x => x.Id == id);
+            var appointment = context.Appointments.FirstOrDefault(x => x.Id == id);
             return appointment is null ? Result.Fail("AppointmentDto not found") : Result.Ok(appointment);
         }
 
@@ -71,17 +65,17 @@ namespace mais_consultas_api.Services
             if (appointment.IsFailed)
                 return appointment;
 
-            Professional professional = _context.Professionals.First(x => x.Id == professionalId);
-            Provider provider = _context.Providers.First(x => x.Id == providerId);
-            Patient patient = _context.Patient.First(x => x.Id == patientId);
+            Professional professional = context.Professionals.First(x => x.Id == professionalId);
+            Provider provider = context.Providers.First(x => x.Id == providerId);
+            Patient patient = context.Patient.First(x => x.Id == patientId);
 
             appointment.Value.SetDateTime(dateTime);
-            appointment.Value.SetProfessional(professional);  
-            appointment.Value.SetProvider(provider);  
+            appointment.Value.SetProfessional(professional);
+            appointment.Value.SetProvider(provider);
             appointment.Value.SetPatient(patient);
 
-            _context.Appointments.Update(appointment.Value);
-            _context.SaveChanges();
+            context.Appointments.Update(appointment.Value);
+            context.SaveChanges();
             return Result.Ok(appointment.Value);
         }
 
@@ -94,9 +88,41 @@ namespace mais_consultas_api.Services
 
             appointment.Value.SetStatus(AppointmentStatusEnum.Canceled);
 
-            _context.Appointments.Update(appointment.Value);
-            _context.SaveChanges();
+            context.Appointments.Update(appointment.Value);
+            context.SaveChanges();
             return Result.Ok();
+        }
+
+        public IList<AppointmentTimesResponse> GetTimes(AppointmentGetTimeRequest request)
+        {
+            IList<AppointmentTimesResponse> responses = Times.GetResponsesTimes();
+            IQueryable<Appointment> query = context.Appointments.AsQueryable();
+            if (request.IdProvider > 0)
+                query = query.Where(a => a.Provider.Id == request.IdProvider);
+
+            if (request.IdProfessional > 0)
+                query = query.Where(a => a.Professional.Id == request.IdProfessional);
+
+            if (request.IdService > 0)
+                query = query.Where(a => a.Professional.Service.Id == request.IdService);
+
+            query = request.DataConsulta != DateTime.MinValue
+                ? query.Where(a => a.DateTime.Date == request.DataConsulta.Date)
+                : query.Where(a => a.DateTime.Date == DateTime.Now.Date);
+
+            IList<Appointment> appointments = query.Where(a => a.Status == AppointmentStatusEnum.Scheduled).ToList();
+
+            foreach (Appointment appointment in appointments)
+            {
+                foreach (AppointmentTimesResponse response in responses)
+                {
+                    if (appointment.DateTime.TimeOfDay.ToString(@"hh\:mm").Contains(response.Time))
+                        response.Available = false;
+                    
+                }
+            }
+
+            return responses;
         }
     }
 }
