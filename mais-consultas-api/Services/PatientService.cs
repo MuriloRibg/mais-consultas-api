@@ -18,9 +18,10 @@ namespace mais_consultas_api.Services
             return _mapper.Map<PatientResponse>(patient);
         }
 
-        public Patient Get(int id)
-        {
-            return _context.Patient.First(x => x.Id == id);
+        public PatientResponse Get(int id)
+        { 
+            Patient patient = _context.Patient.First(x => x.Id == id);
+            return _mapper.Map<PatientResponse>(patient);
         }
 
         public void Remove(int id)
@@ -30,7 +31,7 @@ namespace mais_consultas_api.Services
             _context.SaveChanges();
         }
 
-        public Patient Update(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email,
+        public PatientResponse Update(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email,
             string password)
         {
             Patient patient = _context.Patient.First(y => y.Id == id);
@@ -45,7 +46,7 @@ namespace mais_consultas_api.Services
             _context.Patient.Update(patient);
 
             _context.SaveChanges();
-            return patient;
+            return _mapper.Map<PatientResponse>(patient);
         }
 
         public PatientSignInResponse SignIn(string email, string password)

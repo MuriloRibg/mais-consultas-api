@@ -1,35 +1,30 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace mais_consultas_api.Models
 {
     public class Provider
     {
-        [Key] 
-        public int Id { get; protected set; }
+        [Key] public int Id { get; protected set; }
 
-        [Required] 
-        [MaxLength(45)] 
-        public string Name { get; protected set; }
+        [Required] [MaxLength(45)] public string Name { get; protected set; }
 
-        [Required]
-        [MaxLength(45)] 
-        public string Cnpj { get; protected set; }
+        [Required] [MaxLength(45)] public string Cnpj { get; protected set; }
 
-        [Required]
-        [MaxLength(15)] 
-        public string PhoneNumber { get; protected set; }
+        [Required] [MaxLength(15)] public string PhoneNumber { get; protected set; }
 
-        [Required]
-        [MaxLength(45)] 
-        public string Email { get; protected set; }
+        [Required] [MaxLength(45)] public string Email { get; protected set; }
 
-        [JsonIgnore]
-        public Professional Professional { get; set; }
-        [JsonIgnore]
-        public Appointment Appointment { get; set; }
+        [ForeignKey("Address")] public int Id_Address { get; set; }
+        public Address Address { get; set; }
 
-        public Provider() { }
+        [JsonIgnore] public Professional Professional { get; set; }
+        [JsonIgnore] public Appointment Appointment { get; set; }
+
+        public Provider()
+        {
+        }
 
         public Provider(int id, string name, string cnpj, string phoneNumber, string email)
         {

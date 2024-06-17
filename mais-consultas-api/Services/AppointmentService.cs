@@ -7,6 +7,7 @@ using mais_consultas_api.Models;
 using mais_consultas_api.Models.Enumerators;
 using mais_consultas_api.Services.Interfaces;
 using mais_consultas_api.Services.Uteis;
+using Microsoft.EntityFrameworkCore;
 
 namespace mais_consultas_api.Services
 {
@@ -25,15 +26,15 @@ namespace mais_consultas_api.Services
             Patient? patient = context.Patient.FirstOrDefault(x => x.Id == IdPatient);
             if (patient is null)
                 throw new Exception("PatientDto not found");
-            
+
             Appointment appointment = new(dateTime, professional, provider, patient);
-            
+
             context.Add(appointment);
             context.SaveChanges();
             return mapper.Map<AppointmentResponse>(appointment);
         }
 
-        public Result<IEnumerable<Appointment>> GetAll(AppointmentGetRequest request)
+        public Result<IEnumerable<AppointmentResponse>> GetAll(AppointmentGetRequest request)
         {
             IQueryable<Appointment> query = context.Appointments;
 
@@ -48,21 +49,28 @@ namespace mais_consultas_api.Services
             if (request.ProviderId is not null)
                 query = query.Where(a => a.Id_Provider == request.ProviderId);
 
-            return Result.Ok(query.AsEnumerable());
+            return Result.Ok(mapper.Map<IEnumerable<AppointmentResponse>>(query.AsEnumerable()));
         }
 
-        public Result<Appointment> Get(int id)
+        public Result<AppointmentResponse> Get(int id)
         {
-            var appointment = context.Appointments.FirstOrDefault(x => x.Id == id);
-            return appointment is null ? Result.Fail("AppointmentDto not found") : Result.Ok(appointment);
+            Appointment? appointment = context.Appointments
+                .Include(a => a.Professional)
+                .Include(a => a.Provider).ThenInclude(p => p.Address)
+                .Include(a => a.Patient)
+                .FirstOrDefault(x => x.Id == id);
+
+            return appointment is null
+                ? Result.Fail("AppointmentDto not found")
+                : Result.Ok(mapper.Map<AppointmentResponse>(appointment));
         }
 
         public Result<Appointment> Update(int id, DateTime dateTime, int professionalId, int providerId, int patientId)
         {
-            Result<Appointment> appointment = Get(id);
+            Result<Appointment> appointment = context.Appointments.FirstOrDefault(a => a.Id == id);
 
-            if (appointment.IsFailed)
-                return appointment;
+            if (appointment is null)
+                throw new Exception("Appointment não encontrado");
 
             Professional professional = context.Professionals.First(x => x.Id == professionalId);
             Provider provider = context.Providers.First(x => x.Id == providerId);
@@ -80,10 +88,10 @@ namespace mais_consultas_api.Services
 
         public Result Cancel(int id)
         {
-            Result<Appointment> appointment = Get(id);
+            Result<Appointment> appointment = context.Appointments.FirstOrDefault(a => a.Id == id);
 
-            if (appointment.IsFailed)
-                return appointment.ToResult();
+            if (appointment is null)
+                throw new Exception("Appointment não encontrado");
 
             appointment.Value.SetStatus(AppointmentStatusEnum.Canceled);
 
@@ -117,7 +125,6 @@ namespace mais_consultas_api.Services
                 {
                     if (appointment.DateTime.TimeOfDay.ToString(@"hh\:mm").Contains(response.Time))
                         response.Available = false;
-                    
                 }
             }
 

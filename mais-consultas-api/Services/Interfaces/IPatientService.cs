@@ -9,8 +9,8 @@ namespace mais_consultas_api.Services.Interfaces
     {
         PatientResponse Add(PatientInserirRequest request);
         void Remove(int id);
-        Patient Update(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password);
-        Patient Get(int id);
+        PatientResponse Update(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password);
+        PatientResponse Get(int id);
         PatientSignInResponse SignIn(string email, string password);
     }
 }

@@ -12,7 +12,7 @@ using mais_consultas_api.Data;
 namespace mais_consultas_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240515163701_InitialCreate")]
+    [Migration("20240617144056_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -128,8 +128,8 @@ namespace mais_consultas_api.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -165,6 +165,9 @@ namespace mais_consultas_api.Migrations
                     b.HasIndex("Id_Provider")
                         .IsUnique();
 
+                    b.HasIndex("Id_Service")
+                        .IsUnique();
+
                     b.ToTable("Professionals");
                 });
 
@@ -186,6 +189,9 @@ namespace mais_consultas_api.Migrations
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
+                    b.Property<int>("Id_Address")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(45)
@@ -197,6 +203,8 @@ namespace mais_consultas_api.Migrations
                         .HasColumnType("varchar(15)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id_Address");
 
                     b.ToTable("Providers");
                 });
@@ -259,13 +267,24 @@ namespace mais_consultas_api.Migrations
 
                     b.HasOne("mais_consultas_api.Models.Service", "Service")
                         .WithOne("Professional")
-                        .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Provider")
+                        .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Service")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Provider");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("mais_consultas_api.Models.Provider", b =>
+                {
+                    b.HasOne("mais_consultas_api.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("Id_Address")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("mais_consultas_api.Models.Patient", b =>
