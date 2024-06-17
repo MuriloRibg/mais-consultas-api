@@ -59,6 +59,7 @@ namespace mais_consultas_api.Services
 
             return new PatientSignInResponse
             {
+                Id = patient.Id,
                 Token = token,
                 Name = patient.Name
             };
