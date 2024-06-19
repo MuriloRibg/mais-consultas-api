@@ -16,10 +16,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 //Injetando o AutoMapper
 builder.Services.AddAutoMapper(typeof(ProviderProfile));
 
-// Importando as configurações de Token JWT.
+// Importando as configuraï¿½ï¿½es de Token JWT.
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
-// Adicionando configurações de autenticação via JWT.
+// Adicionando configuraï¿½ï¿½es de autenticaï¿½ï¿½o via JWT.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer((options) =>
 {
     var jwtIssuer = builder.Configuration["Jwt:Issuer"];
@@ -41,10 +41,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddControllers(options =>
 {
-    // Aplica autenticação por padrão à todos os Endpoints.
+    // Aplica autenticaï¿½ï¿½o por padrï¿½o ï¿½ todos os Endpoints.
     var policy = new AuthorizationPolicyBuilder()
-            .RequireAuthenticatedUser()
-            .Build();
+        .RequireAuthenticatedUser()
+        .Build();
     options.Filters.Add(new AuthorizeFilter(policy));
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -80,7 +80,6 @@ builder.Services.AddSwaggerGen(c =>
             new string[] { }
         }
     });
-
 });
 builder.Services.AddCors();
 

@@ -13,9 +13,9 @@ namespace mais_consultas_api.Services
 
         public ProfessionalResponse Add(string name, int idService, int idProvider)
         {
-            Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
+            Provider? provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
             if (provider is null) throw new Exception("ProviderDto não encontrado");
-            Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
+            Service? service = _context.Services.FirstOrDefault(s => s.Id == idService);
             if (service is null) throw new Exception("ServiceDto não encontrado");
             
             Professional professional = new(name, service, provider);
@@ -46,12 +46,12 @@ namespace mais_consultas_api.Services
 
         public Professional Update(int id, string name, int idService, int idProvider)
         {
-            Provider provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
+            Provider? provider = _context.Providers.FirstOrDefault(p => p.Id == idProvider);
             if (provider is null) throw new Exception("ProviderDto não encontrado");
-            Service service = _context.Services.FirstOrDefault(s => s.Id == idService);
+            Service? service = _context.Services.FirstOrDefault(s => s.Id == idService);
             if (service is null) throw new Exception("ServiceDto não encontrado");
             
-            Professional professional = _context.Professionals.Where(y => y.Id == id).First();
+            Professional professional = _context.Professionals.First(y => y.Id == id);
             professional.SetName(name);
             professional.SetService(service);
             professional.SetProvider(provider);

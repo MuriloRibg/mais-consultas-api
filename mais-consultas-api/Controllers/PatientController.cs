@@ -22,7 +22,7 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<Patient> Get(int id)
+        public ActionResult<PatientResponse> Get(int id)
         {
             var response = _patientService.Get(id);
             return Ok(response);
@@ -37,7 +37,7 @@ namespace mais_consultas_api.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<Patient> Put(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
+        public ActionResult<PatientResponse> Put(int id, string cpf, string name, string phoneNumber, DateTime birthdayDate, string email, string password)
         {
             var response = _patientService.Update(id, cpf, name, phoneNumber, birthdayDate, email, password);
             return Ok(response);

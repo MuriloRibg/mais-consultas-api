@@ -27,6 +27,9 @@ namespace mais_consultas_api.Data
                 .HasOne(patient => patient.Appointment)
                 .WithOne(appointment => appointment.Patient)
                 .HasForeignKey<Appointment>(appointment => appointment.Id_Patient);
+            
+            builder.Entity<Provider>()
+                .OwnsOne(p => p.Address);
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     public class AppointmentInsertRequest
     {
+        public int IdService { get; set; }
+        public int IdProvider { get; set; }
+        public int IdPatient { get; set; }
         public DateTime DateTime { get; set; }
-        public int ProfessionalId { get; set; }
-        public int ProviderId { get; set; }
-        public int PatientId { get; set; }
     }
 }

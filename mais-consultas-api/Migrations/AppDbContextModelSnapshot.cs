@@ -84,16 +84,9 @@ namespace mais_consultas_api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id_Patient")
-                        .IsUnique();
-
-                    b.HasIndex("Id_Professional")
-                        .IsUnique();
-
-                    b.HasIndex("Id_Provider")
-                        .IsUnique();
-
+                    b.HasIndex("Id_Patient");
+                    b.HasIndex("Id_Professional");
+                    b.HasIndex("Id_Provider");
                     b.ToTable("Appointments");
                 });
 
@@ -158,13 +151,8 @@ namespace mais_consultas_api.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id_Provider")
-                        .IsUnique();
-
-                    b.HasIndex("Id_Service")
-                        .IsUnique();
-
+                    b.HasIndex("Id_Provider");
+                    b.HasIndex("Id_Service");
                     b.ToTable("Professionals");
                 });
 
@@ -186,6 +174,9 @@ namespace mais_consultas_api.Migrations
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
+                    b.Property<int>("Id_Address")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(45)
@@ -197,7 +188,7 @@ namespace mais_consultas_api.Migrations
                         .HasColumnType("varchar(15)");
 
                     b.HasKey("Id");
-
+                    b.HasIndex("Id_Address");
                     b.ToTable("Providers");
                 });
 
@@ -218,7 +209,6 @@ namespace mais_consultas_api.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
-
                     b.ToTable("Services");
                 });
 
@@ -227,25 +217,23 @@ namespace mais_consultas_api.Migrations
                     b.HasOne("mais_consultas_api.Models.Patient", "Patient")
                         .WithOne("Appointment")
                         .HasForeignKey("mais_consultas_api.Models.Appointment", "Id_Patient")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("mais_consultas_api.Models.Professional", "Professional")
                         .WithOne("Appointment")
                         .HasForeignKey("mais_consultas_api.Models.Appointment", "Id_Professional")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("mais_consultas_api.Models.Provider", "Provider")
                         .WithOne("Appointment")
                         .HasForeignKey("mais_consultas_api.Models.Appointment", "Id_Provider")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Patient");
-
                     b.Navigation("Professional");
-
                     b.Navigation("Provider");
                 });
 
@@ -254,18 +242,28 @@ namespace mais_consultas_api.Migrations
                     b.HasOne("mais_consultas_api.Models.Provider", "Provider")
                         .WithOne("Professional")
                         .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Provider")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("mais_consultas_api.Models.Service", "Service")
                         .WithOne("Professional")
                         .HasForeignKey("mais_consultas_api.Models.Professional", "Id_Service")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Provider");
-
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("mais_consultas_api.Models.Provider", b =>
+                {
+                    b.HasOne("mais_consultas_api.Models.Address", "Address")
+                        .WithOne()
+                        .HasForeignKey("Id_Address")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("mais_consultas_api.Models.Patient", b =>
