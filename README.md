@@ -19,7 +19,7 @@ API .Net 8 usando ORM Entity Framework e com arquitetura MVC.
 
 ```bash
   "ConnectionStrings": {
-    "MySql": "server=localhost;port=3306;database=trabalho;uid=root;pwd=Murilo1202"
+    "MySql": "server=localhost;port=3306;database={SeuDB};uid={SeuUsuario};pwd={SuaSenha}"
   }
 ```
 
